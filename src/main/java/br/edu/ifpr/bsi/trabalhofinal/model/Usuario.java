@@ -8,6 +8,6 @@ package br.edu.ifpr.bsi.trabalhofinal.model;
  *
  * @author Gabis
  */
-public class Modelo {
+public class Usuario {
     
 }
