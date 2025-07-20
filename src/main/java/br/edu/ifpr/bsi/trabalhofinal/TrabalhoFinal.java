@@ -4,6 +4,8 @@
 
 package br.edu.ifpr.bsi.trabalhofinal;
 
+import br.edu.ifpr.bsi.trabalhofinal.view.Login;
+
 /**
  *
  * @author Gabis
@@ -11,6 +13,6 @@ package br.edu.ifpr.bsi.trabalhofinal;
 public class TrabalhoFinal {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        new Login().setVisible(true);
     }
 }
