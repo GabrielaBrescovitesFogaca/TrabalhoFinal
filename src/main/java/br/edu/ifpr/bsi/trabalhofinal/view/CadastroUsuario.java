@@ -198,6 +198,7 @@ public class CadastroUsuario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
             new Login(usuarioController).setVisible(true);
             this.dispose();
+            
         }
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
