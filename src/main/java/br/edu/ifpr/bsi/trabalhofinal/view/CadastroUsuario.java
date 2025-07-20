@@ -4,7 +4,11 @@
  */
 package br.edu.ifpr.bsi.trabalhofinal.view;
 
+import br.edu.ifpr.bsi.trabalhofinal.control.ControllerUsuario;
+import br.edu.ifpr.bsi.trabalhofinal.model.Usuario;
 import br.edu.ifpr.bsi.trabalhofinal.util.ConfiguraCampos;
+import br.edu.ifpr.bsi.trabalhofinal.util.ValidaCampos;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -12,13 +16,20 @@ import br.edu.ifpr.bsi.trabalhofinal.util.ConfiguraCampos;
  */
 public class CadastroUsuario extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Cadastro
-     */
+    private ControllerUsuario usuarioController = new ControllerUsuario();
+    
+    
     public CadastroUsuario() {
         initComponents();
         configuraComponetes();
         setLocationRelativeTo(this);
+    }
+    
+    public CadastroUsuario(ControllerUsuario usuarioController) {
+        initComponents();
+        configuraComponetes();
+        setLocationRelativeTo(this);
+        this.usuarioController = usuarioController;
     }
 
     /**
@@ -61,10 +72,25 @@ public class CadastroUsuario extends javax.swing.JFrame {
         jLabel5.setText("Confirmar Senha");
 
         ckbMostrarSenha.setText("Mostrar senha");
+        ckbMostrarSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ckbMostrarSenhaActionPerformed(evt);
+            }
+        });
 
         ckbMostrarConfirmarSenha.setText("Mostrar senha");
+        ckbMostrarConfirmarSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ckbMostrarConfirmarSenhaActionPerformed(evt);
+            }
+        });
 
         btnConfirmar.setText("CONFIRMAR");
+        btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("CANCELAR");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -153,6 +179,28 @@ public class CadastroUsuario extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void ckbMostrarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckbMostrarSenhaActionPerformed
+        ConfiguraCampos cc = new ConfiguraCampos();
+        String senha =  String.valueOf(pswfSenha.getPassword());
+        cc.configCheckBox(ckbMostrarSenha, pswfSenha, "Senha", senha );
+    }//GEN-LAST:event_ckbMostrarSenhaActionPerformed
+
+    private void ckbMostrarConfirmarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckbMostrarConfirmarSenhaActionPerformed
+        ConfiguraCampos cc = new ConfiguraCampos();
+        String senha =  String.valueOf(pswfConfirmarSenha.getPassword());
+        cc.configCheckBox(ckbMostrarSenha, pswfConfirmarSenha, "Senha", senha );
+    }//GEN-LAST:event_ckbMostrarConfirmarSenhaActionPerformed
+
+    private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
+        if(validarCampo()){
+            Usuario usuario = retornaObjeto();
+            usuarioController.addUsuario(usuario);
+            JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
+            new Login(usuarioController).setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnConfirmarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -210,9 +258,37 @@ public class CadastroUsuario extends javax.swing.JFrame {
         ConfiguraCampos cc = new ConfiguraCampos();
         cc.configTextFild(txtEmail, "Email");
         cc.configCampoSenha(pswfSenha, "Senha");
-        cc.configCampoSenha(pswfConfirmarSenha, " Confirmar Senha");
-        cc.configTextFild(txtNomeCompleto, " Nome Completo");
+        cc.configCampoSenha(pswfConfirmarSenha, "Confirmar Senha");
+        cc.configTextFild(txtNomeCompleto, "Nome Completo");
     }
+    private boolean validarCampo(){
+        boolean resultado = true;
+        ValidaCampos validarCampos = new ValidaCampos();
 
+        if(validarCampos.validaTextField(txtEmail, "Email")) resultado = false;
+        if(validarCampos.validaTextField(txtNomeCompleto, "Nome Completo")) resultado = false;
+        if(validarCampos.validaTextField(pswfSenha, "Senha")) resultado = false;
+        if(validarCampos.validaTextField(pswfConfirmarSenha, "Confirmar Senha")) resultado = false;
+ 
+        
+        return resultado;
+    }
+    
+    private Usuario retornaObjeto(){
+        String nomeCompleto = txtNomeCompleto.getText();
+        String email = txtEmail.getText();
+        String senha = String.valueOf(pswfSenha.getPassword());
+        String confirmarSenha = String.valueOf(pswfConfirmarSenha.getPassword());
+        
+        
+        
+        Usuario usuario = new Usuario();
+        usuario.setNome(nomeCompleto);
+        usuario.setEmail(email);
+        usuario.setSenha(senha);
+        
+        
+        return usuario;
+    }
 
 }

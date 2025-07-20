@@ -4,21 +4,29 @@
  */
 package br.edu.ifpr.bsi.trabalhofinal.view;
 
+import br.edu.ifpr.bsi.trabalhofinal.control.ControllerUsuario;
 import br.edu.ifpr.bsi.trabalhofinal.util.ConfiguraCampos;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Gabis
  */
 public class Login extends javax.swing.JFrame {
-
-    /**
-     * Creates new form Principal
-     */
+    
+    private ControllerUsuario usuarioController = new ControllerUsuario();
+    
     public Login() {
         initComponents();
         configuraComponetes();
         setLocationRelativeTo(this);
+    }
+    
+    public Login(ControllerUsuario usuarioController) {
+        initComponents();
+        configuraComponetes();
+        setLocationRelativeTo(this);
+        this.usuarioController = usuarioController;
     }
 
     /**
@@ -60,6 +68,11 @@ public class Login extends javax.swing.JFrame {
         });
 
         ckbMostrarSenha.setText("Mostrar senha");
+        ckbMostrarSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ckbMostrarSenhaActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Caso não tenha cadastro");
 
@@ -143,9 +156,23 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCliqueAquiMouseClicked
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        new Principal().setVisible(true);
-        this.dispose();
+        String emailDigitado = txtEmail.getText();
+        String senhaDigitado = String.valueOf(pswfSenha.getPassword());
+        if(usuarioController.login(emailDigitado, senhaDigitado)!= null){
+            new Principal().setVisible(true);
+            this.dispose(); 
+        }else{
+                JOptionPane.showMessageDialog(null, "Erro ao logar! Verifique seu email ou senha");
+        }
+           
+        
     }//GEN-LAST:event_btnEntrarActionPerformed
+
+    private void ckbMostrarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckbMostrarSenhaActionPerformed
+        ConfiguraCampos cc = new ConfiguraCampos();
+        String senha =  String.valueOf(pswfSenha.getPassword());
+        cc.configCheckBox(ckbMostrarSenha, pswfSenha, "Senha", senha );
+    }//GEN-LAST:event_ckbMostrarSenhaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -201,5 +228,6 @@ public class Login extends javax.swing.JFrame {
         cc.configTextFild(txtEmail, "Email");
         cc.configCampoSenha(pswfSenha, "Senha");
     }
-
+    
+    
 }

@@ -5,7 +5,9 @@
 package br.edu.ifpr.bsi.trabalhofinal.control;
 
 import br.edu.ifpr.bsi.trabalhofinal.model.Usuario;
+import br.edu.ifpr.bsi.trabalhofinal.view.Principal;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,4 +28,15 @@ public class ControllerUsuario {
         }
         return null;
     }
+
+    public ArrayList<Usuario> getListaUsuarios() {
+        return listaUsuarios;
+    }
+
+    public void setListaUsuarios(ArrayList<Usuario> listaUsuarios) {
+        this.listaUsuarios = listaUsuarios;
+    }
+
+    
+    
 }

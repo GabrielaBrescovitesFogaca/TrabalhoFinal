@@ -34,6 +34,14 @@ public class Principal extends javax.swing.JFrame {
         setLocationRelativeTo(this);
         selecionarProdutoTabela();
     }
+    
+    public Principal(ControllerTarefa tarefaController) {
+        initComponents();
+        configuraComponetes();
+        setLocationRelativeTo(this);
+        selecionarProdutoTabela();
+        this.tarefaController = tarefaController;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -223,7 +231,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimparCamposActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        tarefaController.excluirTarefa(index);
+        deletarTarefa(index);
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
